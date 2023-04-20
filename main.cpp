@@ -5,14 +5,15 @@ using namespace std;
 
 int main() {
     Grafica grafica;
-    grafica.AgregarNodo("Hola");
+    grafica.AgregarNodo("hola");
     grafica.AgregarNodo("bye");
     grafica.AgregarNodo("buenas");
-    grafica.AgregarArista("Hola", "bye");
+    grafica.AgregarArista("hola", "bye");
     grafica.AgregarNodo("adios");
-    grafica.AgregarArista("adios", "Hola");
-    grafica.AgregarArista("Hola","buenas");
+    grafica.AgregarArista("adios", "hola");
+    grafica.AgregarArista("hola","buenas");
+    grafica.EliminarNodo("hola");
     grafica.ImprimirNodos();
-    cout << grafica.ObtenerNumNodos() << endl;
+    cout << grafica.ObtenerGrado("hola") << endl;
     return 0;
 }

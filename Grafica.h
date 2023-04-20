@@ -22,6 +22,8 @@ public:
 
     unsigned ObtenerNumNodos() const;
 
+    unsigned ObtenerGrado(const std::string &etiqueta);
+
     void ImprimirNodos() const;
 
     Grafica &operator=(const Grafica &otra);
