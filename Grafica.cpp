@@ -44,48 +44,7 @@ void Grafica::AgregarNodo(std::string etiqueta) {
 }
 
 void Grafica::EliminarNodo(const std::string &etiqueta) {
-    Nodo *nodoAEliminar = BuscarNodo(etiqueta);
-    if (nodoAEliminar == nullptr) {
-        return; // Si el nodo no existe, no se hace nada
-    }
-
-    // Eliminamos todas las aristas que conectan al nodo a eliminar
-    Nodo *nodoActual = pNodo;
-    while (nodoActual != nullptr) {
-        Nodo::Arista *aristaActual = nodoActual->pArista;
-        Nodo::Arista *aristaAnterior = nullptr;
-        while (aristaActual != nullptr) {
-            if (aristaActual->adyacente == nodoAEliminar) {
-                if (aristaAnterior == nullptr) {
-                    nodoActual->pArista = aristaActual->sigArista;
-                } else {
-                    aristaAnterior->sigArista = aristaActual->sigArista;
-                }
-                delete aristaActual;
-                nodoActual->grado--;
-                break;
-            }
-            aristaAnterior = aristaActual;
-            aristaActual = aristaActual->sigArista;
-        }
-        nodoActual = nodoActual->siguiente;
-    }
-
-    // Eliminamos el nodo a eliminar
-    if (nodoAEliminar == pNodo) {
-        pNodo = nodoAEliminar->siguiente;
-    } else {
-        Nodo *nodoActual = pNodo;
-        while (nodoActual->siguiente != nodoAEliminar) {
-            nodoActual = nodoActual->siguiente;
-        }
-        nodoActual->siguiente = nodoAEliminar->siguiente;
-    }
-    if (nodoAEliminar == uNodo) {
-        uNodo = nodoAEliminar->siguiente;
-    }
-    delete nodoAEliminar;
-    numNodos--;
+    //todo implementar método
 }
 
 
