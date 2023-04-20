@@ -3,4 +3,4 @@ project(Grafica)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Grafica main.cpp)
+add_executable(Grafica main.cpp Grafica.cpp Grafica.h)
