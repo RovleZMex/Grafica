@@ -4,16 +4,21 @@
 using namespace std;
 
 int main() {
-    Grafica grafica;
-    grafica.AgregarNodo("hola");
-    grafica.AgregarNodo("bye");
-    grafica.AgregarNodo("buenas");
-    grafica.AgregarArista("hola", "bye");
-    grafica.AgregarNodo("adios");
-    grafica.AgregarArista("adios", "hola");
-    grafica.AgregarArista("hola","buenas");
-    grafica.EliminarNodo("hola");
-    grafica.ImprimirNodos();
-    cout << grafica.ObtenerGrado("hola") << endl;
-    return 0;
+    try{
+        Grafica grafica;
+        grafica.AgregarNodo("hola");
+        grafica.AgregarNodo("bye");
+        grafica.AgregarNodo("buenas");
+        grafica.AgregarArista("hola", "bye");
+        grafica.AgregarNodo("adios");
+        grafica.AgregarArista("adios", "hola");
+        grafica.AgregarArista("hola","buenas");
+        grafica.EliminarArista("hola","bye");
+        grafica.EliminarNodo("hola");
+        grafica.ImprimirNodos();
+
+        return 0;
+    }catch(exception &exc){
+        cerr << exc.what() << endl;
+    }
 }

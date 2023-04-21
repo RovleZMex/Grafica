@@ -13,11 +13,7 @@ Grafica::Grafica() {
 }
 
 Grafica::~Grafica() {
-    Nodo *actual = pNodo;
-    while(actual != nullptr){
-        EliminarNodo(actual->etiqueta);
-        actual = actual->siguiente;
-    }
+    Vaciar();
 }
 
 
@@ -25,10 +21,27 @@ Grafica &Grafica::operator=(const Grafica &otra) {
     if (this == &otra) {
         return *this;
     }
+
+    Vaciar();
+
+    if (otra.EstaVacia()) {
+        return *this;
+    }
+
+    Nodo *aux = otra.pNodo;
+
+    while (aux != nullptr) {
+        AgregarNodo(aux->etiqueta);
+        aux = aux->siguiente;
+    }
+
     return *this;
 }
 
 Grafica::Grafica(const Grafica &otra) {
+    numNodos = 0;
+    pNodo = nullptr;
+    uNodo = nullptr;
     *this = otra;
 }
 
@@ -44,9 +57,38 @@ void Grafica::AgregarNodo(std::string etiqueta) {
 }
 
 void Grafica::EliminarNodo(const std::string &etiqueta) {
-    //todo implementar método
-}
+    // Buscar el nodo a eliminar
+    Nodo *nodoAEliminar = BuscarNodo(etiqueta);
 
+    if (nodoAEliminar == nullptr) {
+        // El nodo no existe, no hay nada que eliminar
+        return;
+    }
+
+    // Eliminar las aristas que conectan al nodo
+    Nodo *nodoActual = pNodo;
+    while (nodoActual != nullptr) {
+        nodoActual->EliminarArista(nodoAEliminar);
+        nodoActual = nodoActual->siguiente;
+    }
+
+    // Eliminar el nodo de la lista de nodos
+    if (pNodo == nodoAEliminar) {
+        pNodo = nodoAEliminar->siguiente;
+    } else {
+        Nodo *nodoAnterior = pNodo;
+        while (nodoAnterior->siguiente != nodoAEliminar) {
+            nodoAnterior = nodoAnterior->siguiente;
+        }
+        nodoAnterior->siguiente = nodoAEliminar->siguiente;
+    }
+
+    // Liberar la memoria del nodo eliminado
+    delete nodoAEliminar;
+
+    // Actualizar el contador de nodos
+    --numNodos;
+}
 
 unsigned Grafica::ObtenerNumNodos() const {
     return numNodos;
@@ -71,17 +113,20 @@ void Grafica::AgregarArista(const std::string &inicio, const std::string &fin) {
         return;
     }
     std::cout << "Nodo no encontrado" << std::endl;
-    throw "Nodo no encontrado"; //todo add exception
+    throw NodoNoEncontrado();
 }
 
 Grafica::Nodo *Grafica::BuscarNodo(const std::string &etiqueta) const {
     Nodo *actual = pNodo;
-    do {
-        if (actual->etiqueta == etiqueta) return actual;
+    while (actual != nullptr) {
+        if (actual->etiqueta == etiqueta) {
+            return actual;
+        }
         actual = actual->siguiente;
-    } while (actual != nullptr);
+    }
     return nullptr;
 }
+
 
 void Grafica::Nodo::AgregarArista(Nodo *ady) {
     auto *nueva = new Arista(ady);
@@ -99,13 +144,73 @@ void Grafica::Nodo::AgregarArista(Nodo *ady) {
 
 void Grafica::Nodo::ImprimirAristas() const {
     Arista *actual = pArista;
-    while(actual != nullptr){
+    while (actual != nullptr) {
         std::cout << " <-> " << actual->adyacente->etiqueta;
         actual = actual->sigArista;
     }
 }
 
+void Grafica::Nodo::EliminarArista(Nodo *ady) {
+    if (pArista == nullptr) {
+        // No hay aristas que eliminar
+        return;
+    }
+
+    if (pArista->adyacente == ady) {
+        // La primera arista es la que se quiere eliminar
+        Arista *temp = pArista;
+        pArista = pArista->sigArista;
+        delete temp;
+        --grado;
+        return;
+    }
+
+    Arista *aristaActual = pArista;
+    // Checar si la siguiente arista es nula o si el adyacente de la siguiente es diferente
+    // al nodo adyacente
+    while (aristaActual->sigArista != nullptr && aristaActual->sigArista->adyacente != ady) {
+        aristaActual = aristaActual->sigArista;
+    }
+
+    if (aristaActual->sigArista == nullptr) {
+        // No se encontró la arista a eliminar
+        return;
+    }
+
+    // Eliminar la arista encontrada
+    Arista *temp = aristaActual->sigArista;
+    aristaActual->sigArista = aristaActual->sigArista->sigArista;
+    delete temp;
+    --grado;
+}
+
+
 unsigned Grafica::ObtenerGrado(const std::string &etiqueta) {
-    return BuscarNodo(etiqueta)->grado;
+    Nodo *nodo = BuscarNodo(etiqueta);
+    if (nodo != nullptr) return nodo->grado;
+    throw NodoNoEncontrado();
+}
+
+void Grafica::Vaciar() {
+    Nodo *actual = pNodo;
+    while (actual != nullptr) {
+        EliminarNodo(actual->etiqueta);
+        actual = actual->siguiente;
+    }
+}
+
+void Grafica::EliminarArista(const std::string &inicio, const std::string &fin) {
+    Nodo *inicial = BuscarNodo(inicio);
+    Nodo *ady = BuscarNodo(fin);
+    if (inicial != nullptr && ady != nullptr) {
+        inicial->EliminarArista(ady);
+        ady->EliminarArista(inicial);
+        return;
+    }
+    throw NodoNoEncontrado();
+}
+
+bool Grafica::EstaVacia() const {
+    return numNodos == 0;
 }
 

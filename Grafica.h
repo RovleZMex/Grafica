@@ -26,9 +26,15 @@ public:
 
     void ImprimirNodos() const;
 
+    void EliminarArista(const std::string &inicio, const std::string &fin);
+
     Grafica &operator=(const Grafica &otra);
 
     Grafica(const Grafica &otra);
+
+    void Vaciar();
+
+    bool EstaVacia() const;
 
 private:
     unsigned numNodos;
@@ -55,9 +61,18 @@ private:
 
         void ImprimirAristas() const;
 
+        void EliminarArista(Nodo *ady);
+
     } *pNodo, *uNodo;
 
     Nodo *BuscarNodo(const std::string &etiqueta) const;
+};
+
+class NodoNoEncontrado: public std::exception{
+public:
+    const char *what() const throw(){
+        return "Nodo no encontrado";
+    }
 };
 
 #endif //GRAFICA_GRAFICA_H
