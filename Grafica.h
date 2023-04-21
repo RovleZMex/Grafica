@@ -66,6 +66,9 @@ private:
     } *pNodo, *uNodo;
 
     Nodo *BuscarNodo(const std::string &etiqueta) const;
+
+    void OrdenarNodos();
+
 };
 
 class NodoNoEncontrado: public std::exception{

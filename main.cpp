@@ -7,6 +7,7 @@ int main() {
     try{
         Grafica grafica;
         grafica.AgregarNodo("hola");
+        grafica.AgregarNodo("zombie");
         grafica.AgregarNodo("bye");
         grafica.AgregarNodo("buenas");
         grafica.AgregarArista("hola", "bye");
@@ -14,7 +15,7 @@ int main() {
         grafica.AgregarArista("adios", "hola");
         grafica.AgregarArista("hola","buenas");
         grafica.EliminarArista("hola","bye");
-        grafica.EliminarNodo("hola");
+        grafica.AgregarArista("zombie", "bye");
         grafica.ImprimirNodos();
 
         return 0;

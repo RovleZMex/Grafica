@@ -54,6 +54,7 @@ void Grafica::AgregarNodo(std::string etiqueta) {
         uNodo = nuevo;
     }
     ++numNodos;
+    OrdenarNodos();
 }
 
 void Grafica::EliminarNodo(const std::string &etiqueta) {
@@ -214,3 +215,21 @@ bool Grafica::EstaVacia() const {
     return numNodos == 0;
 }
 
+void Grafica::OrdenarNodos() {
+    Nodo *actual = pNodo;
+    while (actual != nullptr) {
+        Nodo *min = actual;
+        Nodo *temp = actual->siguiente;
+        while (temp != nullptr) {
+            if (temp->etiqueta < min->etiqueta) {
+                min = temp;
+            }
+            temp = temp->siguiente;
+        }
+        // Intercambiar el nodo actual con el nodo con la etiqueta más pequeña
+        std::string tempEtiqueta = actual->etiqueta;
+        actual->etiqueta = min->etiqueta;
+        min->etiqueta = tempEtiqueta;
+        actual = actual->siguiente;
+    }
+}
