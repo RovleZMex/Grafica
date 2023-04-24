@@ -78,6 +78,7 @@ void Grafica::EliminarNodo(const std::string &etiqueta) {
         // El nodo no existe, no hay nada que eliminar
         return;
     }
+    numAristas = numAristas - nodoAEliminar->grado;
 
     // Eliminar las aristas que conectan al nodo
     Nodo *nodoActual = pNodo;
@@ -228,9 +229,11 @@ unsigned Grafica::ObtenerGrado(const std::string &etiqueta) {
 
 void Grafica::Vaciar() {
     Nodo *actual = pNodo;
+    Nodo *aux;
     while (actual != nullptr) {
+        aux = actual->siguiente;
         EliminarNodo(actual->etiqueta);
-        actual = actual->siguiente;
+        actual = aux;
     }
 }
 
