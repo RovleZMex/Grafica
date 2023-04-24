@@ -115,7 +115,7 @@ unsigned Grafica::ObtenerNumNodos() const {
 void Grafica::Imprimir() const {
     Nodo *aux = pNodo;
     while (aux != nullptr) {
-        std::cout << aux->etiqueta;
+        std::cout << aux->etiqueta << " -> ";
         aux->ImprimirAristas();
         std::cout << std::endl;
         aux = aux->siguiente;
@@ -174,9 +174,10 @@ void Grafica::Nodo::AgregarArista(Nodo *ady) {
 void Grafica::Nodo::ImprimirAristas() const {
     Arista *actual = pArista;
     while (actual != nullptr) {
-        std::cout << " <-> " << actual->adyacente->etiqueta;
+        std::cout << actual->adyacente->etiqueta << ", ";
         actual = actual->sigArista;
     }
+    if(pArista != nullptr) std::cout << "\b\b";
 }
 
 //****************************************************************
