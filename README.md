@@ -13,4 +13,6 @@ Un programa de consola hecho en C++ que implementa nodos y aristas para crear gr
 * Obtener número de aristas en la gráfica
 * Eliminar nodos de la gráfica
 * Eliminar aristas de la gráfica
+* Buscar nodos
+* Buscar aristas
 * Imprimir los nodos y sus conexiones
