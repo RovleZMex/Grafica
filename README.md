@@ -3,7 +3,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
 
-Un programa de consola hecho en C++ que implementa nodos y aristas para crear graficas
+Un programa de consola hecho en C++ que implementa nodos y aristas para crear gráficas
 
 # Funcionalidades
 * Crear nodos
